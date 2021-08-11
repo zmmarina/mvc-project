@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout.html}"
+>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+<div layout:fragment="content">
+<div class="alert alert-primary" th:if="${mensagem != null}" th:text="${mensagem}"></div>
+
+	<form method="POST" th:object="${vacina}" th:action="@{/vacina/novo}">
+		<input type="hidden" th:field="*{id}"></input>
+		
+		<div class="form-group mb-3">
+			<label for="nome">Nome:</label>
+			<input
+				class="form-control" type="text" th:field="*{nome}" required>
+			</input>
+			<div class="text-danger" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>		
+		</div>
+		<div class="form-group mb-3">
+			<label for="laboratorio">Laboratório:</label>
+			<input
+				class="form-control" type="text" th:field="*{laboratorio}" required>
+			</input>
+			<div class="text-danger" th:if="${#fields.hasErrors('laboratorio')}" th:errors="*{laboratorio}"></div>		
+		</div>
+		
+		<div class="form-group mb-3">
+			<label for="posologia">Posologia:</label>
+			<select class="form-control col-md-4" th:field="*{posologia}" required>
+				<option value="1">Dose Única</option>
+				<option value="0">Duas Doses</option>					
+			</select>				
+		</div>
+			<div class="form-group mb-3">
+			<label for="intervaloDoses">Intervalo entre Doses (semanas):</label>
+			<input
+				class="form-control" type="number" th:field="*{intervaloDoses}" required>
+			</input>		
+		</div>
+			
+	
+		<button class="btn btn-primary btn-sm" type="submit">Save</button>
+	</form>
+</div>
+
+
+
+</html>

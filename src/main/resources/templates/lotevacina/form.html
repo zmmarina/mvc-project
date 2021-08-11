@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout.html}"
+>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+<div layout:fragment="content">
+<div class="alert alert-primary" th:if="${mensagem != null}"
+			th:text="${mensagem}"></div>
+
+<form method="POST" th:object="${lotevacina}" th:action="@{/lotevacina/novo}">
+		<input type="hidden" th:field="*{id}"></input>
+		
+		<div class="form-group mb-3">
+			<label for="vacina">Vacina:</label>
+			<select class="form-select" th:field="*{vacina}">
+				<option th:each="vacina: ${lista}" th:value="${vacina.id}" th:text="${vacina.nome}"/>	
+			</select>				
+		</div>
+		
+		<div class="form-group mb-3">
+			<label for="identificacaoLote">Identificação do Lote:</label>
+			<input
+				class="form-control" type="text" th:field="*{identificacaoLote}" required>
+			</input>
+			<div class="text-danger" th:if="${#fields.hasErrors('identificacaoLote')}" th:errors="*{identificacaoLote}"></div>		 
+		</div>
+		
+			<div class="form-group mb-3">
+			<label for="quantidadeRecebida">Quantidade Recebida:</label>
+			<input
+				class="form-control" type="number" th:field="*{quantidadeRecebida}" required>
+			</input>
+			<div class="text-danger" th:if="${#fields.hasErrors('quantidadeRecebida')}" th:errors="*{quantidadeRecebida}"></div>		 
+		</div>
+		
+		<div class="form-group mb-3">
+			<label for="quantidadeRestante">Quantidade Restante:</label>
+			<input
+				class="form-control" type="number" th:field="*{quantidadeRestante}" required>
+			</input>
+			<div class="text-danger" th:if="${#fields.hasErrors('quantidadeRestante')}" th:errors="*{quantidadeRestante}"></div>		 
+		</div>
+		
+		<div class="form-group mb-3">
+			<label for="dataRecebimento">Data de Recebimento:</label>	
+			<input
+				class="form-control col-md-4" type="text" id="_dataRecebimento">
+			</input>	
+			<input 
+				type="hidden" th:field="*{dataRecebimento}">				
+			</input>
+<!-- 			<div class="text-danger" th:if="${#fields.hasErrors('nascimento')}" th:errors="*{nascimento}"></div>							 -->
+		</div>
+		<div class="form-group mb-3">
+			<label for="dataValidade">Data de Validade:</label>	
+			<input
+				class="form-control col-md-4" type="text" id="_dataValidade">
+			</input>	
+			<input 
+				type="hidden" th:field="*{dataValidade}">				
+			</input>
+<!-- 			<div class="text-danger" th:if="${#fields.hasErrors('nascimento')}" th:errors="*{nascimento}"></div>							 -->
+		</div>
+				
+						
+		<button class="btn btn-primary btn-sm" type="submit">Salvar</button>
+	</form>
+</div>
+
+<div layout:fragment="scripts">
+<script>
+	$(function(){
+		$("#_dataRecebimento").datepicker({
+			changeMonth: true,
+	        changeYear: true,
+	        showButtonPanel: true,
+			dateFormat: "dd/mm/yy",
+			altFormat:"yy-mm-dd",
+			altField:"#dataRecebimento"
+		});
+	});
+	
+	$(function(){
+		$("#_dataValidade").datepicker({
+			changeMonth: true,
+	        changeYear: true,
+	        showButtonPanel: true,
+			dateFormat: "dd/mm/yy",
+			altFormat:"yy-mm-dd",
+			altField:"#dataValidade"
+		});
+	});
+
+</script>
+</div>
+</html>

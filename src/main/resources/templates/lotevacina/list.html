@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout.html}"
+>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<title>Lotes de Vacinas</title>
+</head>
+<div layout:fragment="content">
+<body>
+<div class="alert alert-primary" th:if="${mensagem != null}"
+			th:text="${mensagem}"></div>
+<div th:if="${lista != null}">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Vacina</th>
+				<th>Identificação do Lote</th>
+				<th>Quantidade Recebida</th>
+				<th>Quantidade Restante</th>
+				<th>Data de Recebimento</th>
+				<th>Data de Validade</th>
+				<th>Opções</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="lotevacina: ${lista}">
+				<td th:text="${lotevacina.id}"></td>
+				<td th:text="${lotevacina.vacina.nome}"></td>
+				<td th:text="${lotevacina.identificacaoLote}"></td>
+				<td th:text="${lotevacina.quantidadeRecebida}"></td>
+				<td th:text="${lotevacina.quantidadeRestante}"></td>
+				<td th:text="${#dates.format(lotevacina.dataRecebimento, 'dd/MM/yyyy')}"></td>
+				<td th:text="${#dates.format(lotevacina.dataValidade, 'dd/MM/yyyy')}"></td>
+				
+								
+				<td width="15%"><a class="btn btn-primary btn-sm" th:href="@{/lotevacina/edit(id=${lotevacina.id})}">Editar</a>
+				<a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-warning" th:attr="data-target='#modal-warning'+${lotevacina.id }"><span class="glyphicon glyphicon-trash"></span>Excluir</a>
+							
+							
+							<div class="modal modal-warning fade in"
+								th:id="modal-warning+${lotevacina.id}">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h6 class="modal-title">Deletar Lote de Vacinas</h6>
+										</div>
+										<div class="modal-body">
+											<p>Tem certeza que deseja deletar lote de vacina?</p>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-primary pull-left"
+												data-dismiss="modal">Não</button>
+											<a type="button" class="btn btn-danger"
+												th:href="@{/lotevacina/delete(id=${lotevacina.id})}"><i
+												class="fa fa-check"></i>&nbsp;Sim</a>
+										</div>
+									</div>
+								</div>
+							</div></td>
+			</tr>
+		</tbody>
+	</table>
+</div>	
+</body>
+</div>
+</html>

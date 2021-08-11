@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout.html}"
+>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<title>Locais de Vacinação</title>
+</head>
+<div layout:fragment="content">
+<body>
+<div class="alert alert-primary" th:if="${mensagem != null}"
+			th:text="${mensagem}"></div>
+<div th:if="${lista != null}">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nome</th>
+				<th>Endereço</th>
+				<th>Opções</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="localvacinacao: ${lista}">
+				<td th:text="${localvacinacao.id}"></td>
+				<td th:text="${localvacinacao.nome}" width="20%"></td>
+				<td th:text="${localvacinacao.endereco.logradouro} + ', ' + ${localvacinacao.endereco.numero} + ' - ' + ${localvacinacao.endereco.municipio} + ' / ' + ${localvacinacao.endereco.uf}"></td>
+				
+								
+				<td><a class="btn btn-primary btn-sm" th:href="@{/localvacinacao/edit(id=${localvacinacao.id})}">Editar</a>
+				<a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-warning" th:attr="data-target='#modal-warning'+${localvacinacao.id }"><span class="glyphicon glyphicon-trash"></span>Excluir</a>
+							
+							
+							<div class="modal modal-warning fade in"
+								th:id="modal-warning+${localvacinacao.id}">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h6 class="modal-title">Deletar Local de Vacinação</h6>
+										</div>
+										<div class="modal-body">
+											<p>Tem certeza que deseja deletar local de vacinação?</p>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-primary pull-left"
+												data-dismiss="modal">Não</button>
+											<a type="button" class="btn btn-danger"
+												th:href="@{/localvacinacao/delete(id=${localvacinacao.id})}"><i
+												class="fa fa-check"></i>&nbsp;Sim</a>
+										</div>
+									</div>
+								</div>
+							</div></td>
+			</tr>
+		</tbody>
+	</table>
+</div>	
+</body>
+</div>
+</html>
