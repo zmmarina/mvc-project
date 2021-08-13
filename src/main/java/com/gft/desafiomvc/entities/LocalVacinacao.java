@@ -5,7 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class LocalVacinacao {
@@ -14,6 +16,8 @@ public class LocalVacinacao {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotEmpty(message = "Um nome deve ser informado.")
+	@Size(min=4, max=20, message = "O nome deve conter entre 4 e 20 caracteres.")
 	private String nome;
 	
 	@Embedded

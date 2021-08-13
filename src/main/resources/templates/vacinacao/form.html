@@ -36,7 +36,7 @@ layout:decorate="~{layout.html}"
 				<div class="form-group mb-3">
 			<label for="loteVacina">Lote de Vacina:</label>
 			<select class="form-select" th:field="*{loteVacina}">
-				<option th:each="loteVacina: ${listalote}" th:value="${loteVacina.id}" th:text="${loteVacina.id}"/>	
+				<option th:each="loteVacina: ${listalote}" th:value="${loteVacina.id}" th:text="${loteVacina.vacina.nome}"/>	
 			</select>				
 		</div>
 		
@@ -63,6 +63,7 @@ layout:decorate="~{layout.html}"
 <script>
 	$(function(){
 		$("#_data").datepicker({
+			minDate: 0,
 			changeMonth: true,
 	        changeYear: true,
 	        showButtonPanel: true,

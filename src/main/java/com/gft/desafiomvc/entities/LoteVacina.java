@@ -8,8 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -28,6 +31,7 @@ public class LoteVacina {
 	private String identificacaoLote;
 	
 	@NotNull(message= "A quantidade recebida deve ser informada.")
+	@Min(1)
 	private Integer quantidadeRecebida;
 	
 	@NotNull(message= "A quantidade restante deve ser informada.")
@@ -35,10 +39,12 @@ public class LoteVacina {
 	
 	@NotNull(message= "A data de recebimento deve ser informada.")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Past(message="A data de recebimento deve ser a de hoje ou anterior.")
 	private Date dataRecebimento;
 	
 	@NotNull(message= "A data de validade deve ser informada.")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@FutureOrPresent(message="A data de validade deve ser futura.")
 	private Date dataValidade;
 	
 	

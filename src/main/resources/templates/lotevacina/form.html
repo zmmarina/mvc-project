@@ -12,7 +12,7 @@ layout:decorate="~{layout.html}"
 <div class="alert alert-primary" th:if="${mensagem != null}"
 			th:text="${mensagem}"></div>
 
-<form method="POST" th:object="${lotevacina}" th:action="@{/lotevacina/novo}">
+<form id="lote" method="POST" th:object="${lotevacina}" th:action="@{/lotevacina/novo}">
 		<input type="hidden" th:field="*{id}"></input>
 		
 		<div class="form-group mb-3">
@@ -33,7 +33,7 @@ layout:decorate="~{layout.html}"
 			<div class="form-group mb-3">
 			<label for="quantidadeRecebida">Quantidade Recebida:</label>
 			<input
-				class="form-control" type="number" th:field="*{quantidadeRecebida}" required>
+				class="form-control" min='1'id="recebida" name="recebida" type="number" th:field="*{quantidadeRecebida}" required>
 			</input>
 			<div class="text-danger" th:if="${#fields.hasErrors('quantidadeRecebida')}" th:errors="*{quantidadeRecebida}"></div>		 
 		</div>
@@ -41,8 +41,9 @@ layout:decorate="~{layout.html}"
 		<div class="form-group mb-3">
 			<label for="quantidadeRestante">Quantidade Restante:</label>
 			<input
-				class="form-control" type="number" th:field="*{quantidadeRestante}" required>
+				class="form-control" id="restante" name="restante" type="number" th:field="*{quantidadeRestante}" required>
 			</input>
+			<div class="alert alert-danger mt-3" role="alert" id="erro_quantidade" style="display: none;"><strong>Atenção!</strong> A quantidade restante de vacinas deve ser igual ou menor do que a recebida.</div>
 			<div class="text-danger" th:if="${#fields.hasErrors('quantidadeRestante')}" th:errors="*{quantidadeRestante}"></div>		 
 		</div>
 		
@@ -54,7 +55,7 @@ layout:decorate="~{layout.html}"
 			<input 
 				type="hidden" th:field="*{dataRecebimento}">				
 			</input>
-<!-- 			<div class="text-danger" th:if="${#fields.hasErrors('nascimento')}" th:errors="*{nascimento}"></div>							 -->
+		<div class="text-danger" th:if="${#fields.hasErrors('dataRecebimento')}" th:errors="*{dataRecebimento}"></div>						
 		</div>
 		<div class="form-group mb-3">
 			<label for="dataValidade">Data de Validade:</label>	
@@ -64,7 +65,7 @@ layout:decorate="~{layout.html}"
 			<input 
 				type="hidden" th:field="*{dataValidade}">				
 			</input>
-<!-- 			<div class="text-danger" th:if="${#fields.hasErrors('nascimento')}" th:errors="*{nascimento}"></div>							 -->
+         <div class="text-danger" th:if="${#fields.hasErrors('dataValidade')}" th:errors="*{dataValidade}"></div>							 
 		</div>
 				
 						
@@ -76,6 +77,7 @@ layout:decorate="~{layout.html}"
 <script>
 	$(function(){
 		$("#_dataRecebimento").datepicker({
+			maxDate: 0,
 			changeMonth: true,
 	        changeYear: true,
 	        showButtonPanel: true,
@@ -87,6 +89,7 @@ layout:decorate="~{layout.html}"
 	
 	$(function(){
 		$("#_dataValidade").datepicker({
+			minDate: 0,
 			changeMonth: true,
 	        changeYear: true,
 	        showButtonPanel: true,
@@ -95,6 +98,19 @@ layout:decorate="~{layout.html}"
 			altField:"#dataValidade"
 		});
 	});
+	
+
+	$('#restante').focusout(function() {
+	       if ($('#restante').val() > ($('#recebida').val())) {
+	    	   $('#restante').val('');
+	    	   $("#erro_quantidade").show();
+	       } else {
+	        $("#erro_quantidade").hide();
+	       }
+	       
+	  });
+
+	  
 
 </script>
 </div>

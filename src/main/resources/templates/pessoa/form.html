@@ -18,9 +18,9 @@ layout:decorate="~{layout.html}"
 		<div class="form-group mb-3">
 			<label for="nome">Nome:</label>
 			<input
-				class="form-control" type="text" th:field="*{nome}" required>
+				class="form-control" type="text" th:field="*{nome}" pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" required>
 			</input>
-<!-- 			<div class="text-danger" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>		 -->
+    	<div class="text-danger" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
 		</div>
 		
 		<div class="form-group mb-3">
@@ -31,23 +31,18 @@ layout:decorate="~{layout.html}"
 			<input 
 				type="hidden" th:field="*{nascimento}">				
 			</input>
-<!-- 			<div class="text-danger" th:if="${#fields.hasErrors('nascimento')}" th:errors="*{nascimento}"></div>							 -->
+     	<div class="text-danger" th:if="${#fields.hasErrors('nascimento')}" th:errors="*{nascimento}"></div>
 		</div>
 		
 		<div class="form-group mb-3">
 			<label for="cpf">CPF:</label>
-			<input
-				class="form-control" type="text" th:field="*{cpf}" data-mascara="000.000.000-00" required>
-			</input>
-<!-- 			<div class="text-danger" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></div>		 -->
+			<input class="form-control" type="text" th:field="*{cpf}" oninput="mascara(this)" required>
+			<div class="text-danger" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></div>		
 		</div>
 		
 
 		<div class="form-group mb-3">
 			<label for="endereco">Endereço:</label>
-			<!-- <input
-				class="form-control" type="hidden" th:field="*{endereco}">
-			</input>	 -->
 			<br>
 		<label>Cep:
         <input class="form-control" name="cep" type="text" id="cep" th:field="*{endereco.cep}" value="" size="10" maxlength="9" /></label><br />
@@ -141,6 +136,21 @@ layout:decorate="~{layout.html}"
              }
          });
      });
+	 
+	 function mascara(i){
+		   
+		   var v = i.value;
+		   
+		   if(isNaN(v[v.length-1])){ // impede entrar outro caractere que não seja número
+		      i.value = v.substring(0, v.length-1);
+		      return;
+		   }
+		   
+		   i.setAttribute("maxlength", "14");
+		   if (v.length == 3 || v.length == 7) i.value += ".";
+		   if (v.length == 11) i.value += "-";
+
+		}
 </script>
 </div>
 </html>

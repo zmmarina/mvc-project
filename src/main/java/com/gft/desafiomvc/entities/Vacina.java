@@ -6,6 +6,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Range;
 
 @Entity
 public class Vacina {
@@ -15,17 +18,19 @@ public class Vacina {
 	private Long id;
 	
 	@NotEmpty(message= "O nome deve ser preenchido.")
+	@Size(min=4, max=20, message = "O nome deve conter entre 4 e 20 caracteres.")
 	private String nome;
 	
 	@NotEmpty(message= "O laboratório deve ser informado.")
+	@Size(min=4, max=20, message = "O nome deve conter entre 4 e 20 caracteres.")
 	private String laboratorio;
 	
 	
-	@NotNull(message= "A posologia deve ser informada.")
+	@NotNull(message= "A posologia deve ser informada.")	
 	private Boolean posologia;
 	
 	
-	@NotNull(message= "O intervalo entre as doses deve ser informado.")
+	@Range(min=2, max=12, message= "O intervalo entre as doses varia entre 2 e 12 semanas")
 	private Integer intervaloDoses;
 	
 		

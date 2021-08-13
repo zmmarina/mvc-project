@@ -9,7 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -18,16 +22,18 @@ public class Pessoa {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
-	
-	
-	//@CPF(message= "CPF inválido.")
+		
+	@CPF(message= "CPF inválido.")
 	@Column(unique= true, nullable = false)
 	private String cpf;
 	
 	@NotEmpty(message= "O nome deve ser preenchido.")
+	@Size(min=4, max=100, message = "O nome deve conter entre 4 e 100 caracteres.")
 	private String nome;
 	
+	@NotNull(message= "A data de nascimento deve ser informada.")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Past(message = "A data deve estar no passado.")
 	private Date nascimento;
 	
 	@Embedded

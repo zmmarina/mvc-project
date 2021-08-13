@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -22,6 +23,7 @@ public class Vacinacao {
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message= "Uma data deve ser informada.")
+	@FutureOrPresent(message="A data de vacinação deve ser futura.")
 	private Date data;
 	
 	@OneToOne
