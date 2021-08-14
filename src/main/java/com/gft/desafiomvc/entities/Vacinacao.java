@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotEmpty;
@@ -26,7 +27,7 @@ public class Vacinacao {
 	@FutureOrPresent(message="A data de vacinação deve ser futura.")
 	private Date data;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "pessoa")
 	private Pessoa pessoa;
 	

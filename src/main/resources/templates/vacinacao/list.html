@@ -6,6 +6,16 @@ layout:decorate="~{layout.html}"
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<style >
+.hideclass{
+display: none
+}
+
+.showclass{
+display: inherit
+}
+</style>
 </head>
 <title>Vacinações</title>
 </head>
@@ -14,7 +24,12 @@ layout:decorate="~{layout.html}"
 <div class="alert alert-primary" th:if="${mensagem != null}"
 			th:text="${mensagem}"></div>
 <div th:if="${lista != null}">
-	<table class="table table-striped">
+<form th:action="@{/vacinacao}" method="get" class="d-flex ml-4">
+				<input id="pesquisaid" class="form-control me-2" type="text"
+					name="cpf" placeholder="Verifique CPF" aria-label="Search">
+				<button class="btn btn-primary btn-sm" type="submit">Pesquisar CPF</button>
+			</form>
+	<table id="tabela" class="table table-striped">
 		<thead>
 			<tr>
 				<th>Id</th>
@@ -33,11 +48,15 @@ layout:decorate="~{layout.html}"
 				<td th:text="${vacinacao.pessoa.nome}"></td>
 				<td th:text="${vacinacao.loteVacina.vacina.nome}"></td>
 				<td th:text="${vacinacao.localVacinacao.nome}"></td>
-				<td th:text="${vacinacao.dose}"></td>
+				<td id="_dose" th:text="${vacinacao.dose}"></td>
 				
 				
 								
-				<td width="15%"><a class="btn btn-primary btn-sm" th:href="@{/vacinacao/edit(id=${vacinacao.id})}">Editar</a>
+				<td width="35%">
+				
+				<a id="botaodose" th:classappend="${vacinacao.dose} != 'primeira' ? hideclass : showclass" class="btn btn-primary btn-sm" th:href="@{/vacinacao/edit(id=${vacinacao.id})}">Nova vacinação</a>	
+							
+				<a class="btn btn-primary btn-sm" th:href="@{/vacinacao/edit(id=${vacinacao.id})}">Editar</a>
 				<a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-warning" th:attr="data-target='#modal-warning'+${vacinacao.id }"><span class="glyphicon glyphicon-trash"></span>Excluir</a>
 							
 							
@@ -46,10 +65,10 @@ layout:decorate="~{layout.html}"
 								<div class="modal-dialog">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h6 class="modal-title">Deletar Lote de Vacinas</h6>
+											<h6 class="modal-title">Deletar Vacinação?</h6>
 										</div>
 										<div class="modal-body">
-											<p>Tem certeza que deseja deletar lote de vacina?</p>
+											<p>Tem certeza que deseja deletar esta vacinação?</p>
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-primary pull-left"
@@ -60,7 +79,9 @@ layout:decorate="~{layout.html}"
 										</div>
 									</div>
 								</div>
-							</div></td>
+							</div>
+	
+						</td>							
 			</tr>
 		</tbody>
 	</table>

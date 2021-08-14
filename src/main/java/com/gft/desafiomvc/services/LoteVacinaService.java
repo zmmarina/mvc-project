@@ -9,12 +9,14 @@ import org.springframework.stereotype.Service;
 import com.gft.desafiomvc.entities.LoteVacina;
 import com.gft.desafiomvc.repositories.LoteVacinaRepository;
 
+
 @Service
 public class LoteVacinaService {
 	
 	@Autowired
 	private LoteVacinaRepository loteVacinaRepository;
 	
+
 	public LoteVacina salvarLoteVacina(LoteVacina loteVacina) {
 		
 		return loteVacinaRepository.save(loteVacina);
@@ -39,7 +41,6 @@ public class LoteVacinaService {
 	public void excluirLoteVacina(Long id) {
 		
 		loteVacinaRepository.deleteById(id);
-	}	
-
+	}
 
 }

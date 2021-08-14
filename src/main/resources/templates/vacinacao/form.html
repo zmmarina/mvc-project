@@ -23,7 +23,7 @@ layout:decorate="~{layout.html}"
 			<input 
 				type="hidden" th:field="*{data}">				
 			</input>
-<!-- 			<div class="text-danger" th:if="${#fields.hasErrors('nascimento')}" th:errors="*{nascimento}"></div>							 -->
+	<div class="text-danger" th:if="${#fields.hasErrors('data')}" th:errors="*{data}"></div>							 
 		</div>
 		
 		<div class="form-group mb-3">
@@ -46,14 +46,15 @@ layout:decorate="~{layout.html}"
 				<option th:each="localVacinacao: ${listalocal}" th:value="${localVacinacao.id}" th:text="${localVacinacao.nome}"/>	
 			</select>				
 		</div>
-		
 		<div class="form-group mb-3">
 			<label for="dose">Dose:</label>
-			<input
-				class="form-control" type="text" th:field="*{dose}" required>
-			</input>		
+			<select class="form-control col-md-4" id="dose" th:field="*{dose}" required>
+				<option value="">Selecione Dose</option>
+				<option value="primeira">Primeira Dose</option>
+				<option value="segunda">Segunda Dose</option>	
+				<option value="unica">Dose Única</option>					
+			</select>				
 		</div>
-				
 						
 		<button class="btn btn-primary btn-sm" type="submit">Salvar</button>
 	</form>

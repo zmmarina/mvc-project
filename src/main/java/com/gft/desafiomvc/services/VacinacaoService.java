@@ -40,4 +40,11 @@ public class VacinacaoService {
 		
 		vacinacaoRepository.deleteById(id);
 	}	
+	
+	public List<Vacinacao> listarVacinacaoPessoaId(String cpf){
+		
+		return vacinacaoRepository.encontrarVacinacaoPacienteId(cpf);
+	}
+	
+
 }

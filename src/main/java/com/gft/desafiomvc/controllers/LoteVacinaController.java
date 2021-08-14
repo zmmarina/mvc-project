@@ -86,7 +86,7 @@ public class LoteVacinaController {
 		 	e.printStackTrace();
 		}
 		
-		mv.addObject("list", vacinaService.listarVacinas());
+		mv.addObject("lista", vacinaService.listarVacinas());
 		
 		return mv;
 	}
