@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout.html}"
+>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+<title>Relatório por Dose</title>
+</head>
+<div layout:fragment="content">
+<body>
+<div class="alert alert-primary" th:if="${mensagem != null}" th:text="${mensagem}"></div>
+<div >
+			<form th:action="@{/paciente/relatorio}" method="get" class="d-flex ml-4">
+				<input id="pesquisadose" class="form-control me-2" type="text"
+					name="dose" placeholder="Verifique por Dose" aria-label="Search">
+				<button class="btn btn-primary btn-sm mr-1" type="submit">Pesquisar Paciente por Dose</button>											
+			</form>
+			
+	<table id="tabela" class="table table-striped">
+		<thead>
+			<tr>
+				<th>Id Vacinação</th>
+				<th>Data</th>
+				<th>Paciente</th>
+				<th>CPF</th>
+				<th>Lote da Vacina</th>
+				<th>Local da Vacinação</th>
+				<th>Dose</th>				
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="vacinacao: ${listavacinacao}">
+				<td th:text="${vacinacao.id}"></td>
+				<td th:text="${#temporals.format(vacinacao.data, 'dd/MM/yyyy')}"></td>
+				<td th:text="${vacinacao.pessoa.nome}" width="20%"></td>
+				<td th:text="${vacinacao.pessoa.cpf}"></td>
+				<td th:text="${vacinacao.loteVacina.vacina.nome}"></td>
+				<td th:text="${vacinacao.localVacinacao.nome}"></td>
+				<td th:text="${vacinacao.dose}"></td>				
+		</tbody>
+	</table>
+</div>	
+</body>
+</div>
+</html>

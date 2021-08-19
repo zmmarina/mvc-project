@@ -32,9 +32,9 @@ public class VacinaController {
 	}
 	
 	@RequestMapping(method= RequestMethod.POST, path= "/novo")
-	public ModelAndView salvarVacina(@Valid Vacina vacina, BindingResult bindingResult) {
+	public ModelAndView salvarVacina(@Valid Vacina vacina, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
-		ModelAndView mv = new ModelAndView("vacina/form.html");
+		ModelAndView mv = new ModelAndView("redirect:/vacina");
 		
 		boolean novaVacina = true;
 		
@@ -55,8 +55,8 @@ public class VacinaController {
 			mv.addObject("vacina", vacinaSalva);
 		}
 		
-		mv.addObject("mensagem", "Successo: vacina salva!");
-		
+		redirectAttributes.addFlashAttribute("mensagem", "Successo: vacina salva!");
+				
 		return mv;		
 	}
 	

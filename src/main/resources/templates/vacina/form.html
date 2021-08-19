@@ -40,7 +40,7 @@ layout:decorate="~{layout.html}"
 			<div class="form-group mb-3" id="oculto">
 			<label for="intervaloDoses">Intervalo entre Doses (semanas):</label>
 			<input
-				class="form-control" type="number" th:field="*{intervaloDoses}" pattern="[0-9]+$">
+				class="form-control" type="number" th:field="*{intervaloDoses}" pattern="[0-9]+$" placeholder="Informe número entre 2 e 12" max="12" min="2">
 			</input>	
 			<div class="text-danger" th:if="${#fields.hasErrors('intervaloDoses')}" th:errors="*{intervaloDoses}"></div>			
 		</div>
@@ -61,10 +61,7 @@ $(document).ready(function() {
 	    }
 	  });
 	});
-
+	
 </script>
 </div>
-</html>
-
-
 </html>

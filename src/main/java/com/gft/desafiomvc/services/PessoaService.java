@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.gft.desafiomvc.entities.Pessoa;
 import com.gft.desafiomvc.repositories.PessoaRepository;
 
+
 @Service
 public class PessoaService {
 	
@@ -16,8 +17,20 @@ public class PessoaService {
 	private PessoaRepository pessoaRepository;
 	
 	
-	public Pessoa salvarPessoa(Pessoa pessoa) {
+	public Pessoa salvarPessoa(Pessoa pessoa) throws Exception {
 		
+		if (pessoa.getId() == null) {
+			if(pessoaRepository.encontrarPessoaCPF(pessoa.getCpf()) == null) {
+				return pessoaRepository.save(pessoa);
+			} else {
+				throw new Exception("CPF já cadastrado!");
+			}				
+		}else {
+			if(pessoaRepository.encontrarPessoaCPF(pessoa.getCpf()) != null) {
+				return pessoaRepository.save(pessoa);
+			}
+		}
+				
 		return pessoaRepository.save(pessoa);
 	}
 	
@@ -35,6 +48,13 @@ public class PessoaService {
 		}
 		
 		return pessoa.get();
+	}
+	
+	public Pessoa encontrarPessoaCPF(String cpf) {
+		
+		Pessoa pessoa = pessoaRepository.encontrarPessoaCPF(cpf);
+		
+		return pessoa;		
 	}
 	
 	public void excluirPessoa(Long id) {

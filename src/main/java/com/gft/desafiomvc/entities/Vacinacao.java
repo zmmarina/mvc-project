@@ -1,6 +1,6 @@
 package com.gft.desafiomvc.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,10 +22,10 @@ public class Vacinacao {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
 	
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@NotNull(message= "Uma data deve ser informada.")
 	@FutureOrPresent(message="A data de vacinação deve ser futura.")
-	private Date data;
+	private LocalDate data;
 	
 	@ManyToOne
 	@JoinColumn(name = "pessoa")
@@ -49,10 +49,10 @@ public class Vacinacao {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Date getData() {
+	public LocalDate getData() {
 		return data;
 	}
-	public void setData(Date data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 	public Pessoa getPessoa() {

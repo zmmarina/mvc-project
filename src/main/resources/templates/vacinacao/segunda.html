@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{layout.html}"
+>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+<div layout:fragment="content">
+<div class="alert alert-primary" th:if="${mensagem != null}"
+			th:text="${mensagem}"></div>
+
+<form method="POST" th:object="${vacinacao}" th:action="@{/vacinacao/novo}">
+		<input type="hidden" th:field="*{id}"></input>
+		
+		<div class="form-group mb-3">
+			<label for="data">Data:</label>	
+			<input
+				class="form-control col-md-4" type="text" id="_data" th:field="*{data}">
+			</input>	
+			<input class="d-none" id="intervalo" th:value="${vacinacao.loteVacina.vacina.intervaloDoses}" >				
+			</input>
+			
+	<div class="text-danger" th:if="${#fields.hasErrors('data')}" th:errors="*{data}"></div>							 
+		</div>
+		
+		<div class="form-group mb-3">
+			<label for="pessoa">Paciente:</label>
+			<select class="form-select" th:field="*{pessoa}">				
+				<option th:value="${vacinacao.id}" th:text="${vacinacao.pessoa.nome}"/>	
+			</select>				
+		</div>
+		
+				<div class="form-group mb-3">
+			<label for="loteVacina">Lote de Vacina:</label>
+			<select class="form-select" th:field="*{loteVacina}">
+				<option th:value="${vacinacao.id}" th:text="${vacinacao.loteVacina.vacina.nome}"/>	
+			</select>				
+		</div>
+		
+		<div class="form-group mb-3">
+			<label for="localVacinacao">Local da Vacinação:</label>
+			<select class="form-select" th:field="*{localVacinacao}">
+				<option th:each="localVacinacao: ${listalocal}" th:value="${localVacinacao.id}" th:text="${localVacinacao.nome}"/>	
+			</select>				
+		</div>
+		<div class="form-group mb-3">
+			<label for="dose">Dose:</label>
+			<select class="form-control col-md-4" id="dose" th:field="*{dose}" required>
+				<option value="segunda">Segunda Dose</option>							
+			</select>				
+		</div>
+						
+		<button class="btn btn-primary btn-sm" type="submit">Salvar</button>
+	</form>
+</div>
+
+<div layout:fragment="scripts">
+<script>
+
+var diasintervalo = $("#intervalo").val();
+
+$(function(){
+		$("#_data").datepicker({
+			minDate: diasintervalo,
+			changeMonth: true,
+	        changeYear: true,
+	        showButtonPanel: true,
+			dateFormat: "dd/mm/yy",
+			altFormat:"yy-mm-dd",
+			altField:"#data"
+		});
+	});
+	
+</script>
+</div>
+</html>

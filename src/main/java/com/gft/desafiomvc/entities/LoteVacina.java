@@ -1,7 +1,8 @@
 package com.gft.desafiomvc.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +13,7 @@ import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
+import javax.validation.constraints.PastOrPresent;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -28,6 +29,7 @@ public class LoteVacina {
 	private Vacina vacina;
 	
 	@NotEmpty(message= "O lote deve ser informado.")
+	@Column(unique= true, nullable = false)
 	private String identificacaoLote;
 	
 	@NotNull(message= "A quantidade recebida deve ser informada.")
@@ -38,14 +40,14 @@ public class LoteVacina {
 	private Integer quantidadeRestante;
 	
 	@NotNull(message= "A data de recebimento deve ser informada.")
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Past(message="A data de recebimento deve ser a de hoje ou anterior.")
-	private Date dataRecebimento;
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	@PastOrPresent(message="A data de recebimento deve ser a de hoje ou anterior.")
+	private LocalDate dataRecebimento;
 	
 	@NotNull(message= "A data de validade deve ser informada.")
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@FutureOrPresent(message="A data de validade deve ser futura.")
-	private Date dataValidade;
+	private LocalDate dataValidade;
 	
 	
 	public Long getId() {
@@ -78,16 +80,16 @@ public class LoteVacina {
 	public void setQuantidadeRestante(Integer quantidadeRestante) {
 		this.quantidadeRestante = quantidadeRestante;
 	}
-	public Date getDataRecebimento() {
+	public LocalDate getDataRecebimento() {
 		return dataRecebimento;
 	}
-	public void setDataRecebimento(Date dataRecebimento) {
+	public void setDataRecebimento(LocalDate dataRecebimento) {
 		this.dataRecebimento = dataRecebimento;
 	}
-	public Date getDataValidade() {
+	public LocalDate getDataValidade() {
 		return dataValidade;
 	}
-	public void setDataValidade(Date dataValidade) {
+	public void setDataValidade(LocalDate dataValidade) {
 		this.dataValidade = dataValidade;
 	}
 	

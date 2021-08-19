@@ -1,5 +1,7 @@
 package com.gft.desafiomvc.controllers;
 
+import java.util.ArrayList;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.gft.desafiomvc.dto.RelatorioVacinaDTO;
 import com.gft.desafiomvc.entities.LoteVacina;
 import com.gft.desafiomvc.services.LoteVacinaService;
 import com.gft.desafiomvc.services.VacinaService;
@@ -37,10 +40,10 @@ public class LoteVacinaController {
 	}
 	
 	@RequestMapping(method= RequestMethod.POST, path= "/novo")
-	public ModelAndView salvarLoteVacina(@Valid LoteVacina loteVacina, BindingResult bindingResult) {
+	public ModelAndView salvarLoteVacina(@Valid LoteVacina loteVacina, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
-		ModelAndView mv = new ModelAndView("lotevacina/form.html");
-		
+		ModelAndView mv = new ModelAndView("redirect:/lotevacina");
+				
 		boolean novoLoteVacina = true;
 		
 		if(loteVacina.getId() != null) {
@@ -50,19 +53,22 @@ public class LoteVacinaController {
 		if(bindingResult.hasErrors()) {
 			mv.addObject("lotevacina", loteVacina);
 			return mv;
-		}
+		}		
 		
-		LoteVacina loteVacinaSalvo = loteVacinaService.salvarLoteVacina(loteVacina);
+		try {
+			LoteVacina loteVacinaSalvo = loteVacinaService.salvarLoteVacina(loteVacina);
+			mv.addObject("lotevacina", loteVacinaSalvo);
+			redirectAttributes.addFlashAttribute("mensagem", "Sucesso: dados salvos!");
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("mensagem", "Lote de Vacina já cadastrado!");
+			e.printStackTrace();
+		}
 		
 		if(novoLoteVacina) {
-			mv.addObject("lotevacina", new LoteVacina());
-		} else {
-			mv.addObject("lotevacina", loteVacinaSalvo);
-		}
-		
-		mv.addObject("mensagem", "Successo: lote de vacina salvo!");
-		
-		return mv;
+			mv.addObject("lotevacina", novoLoteVacina);
+		}		
+						
+		return mv;		
 	}
 	
 	@RequestMapping(method= RequestMethod.GET)
@@ -74,25 +80,46 @@ public class LoteVacinaController {
 		return mv;
 	}
 	
-	@RequestMapping(path="/edit")
-	public ModelAndView editarLoteVacina(@RequestParam Long id) {
+	@RequestMapping(method= RequestMethod.GET, path="/relatorio")
+	public ModelAndView gerarRelatorioLoteVacinas() {
 		
-		ModelAndView mv = new ModelAndView("lotevacina/form.html");
+		ArrayList<RelatorioVacinaDTO> listaRelatorio = new ArrayList<>(); 
 		
-		try {
-			LoteVacina loteVacina = loteVacinaService.encontrarloteVacina(id);
-			mv.addObject("lotevacina", loteVacina);
-		} catch (Exception e) {
-		 	e.printStackTrace();
+		for (LoteVacina loteVacina : loteVacinaService.listarLoteVacina()) {
+			
+			RelatorioVacinaDTO relatorioVacina = new RelatorioVacinaDTO(loteVacina);	
+			
+			if(relatorioVacina.getDiasVencimento() < 30) {
+				
+				listaRelatorio.add(relatorioVacina);				
+			}			
+			
 		}
 		
-		mv.addObject("lista", vacinaService.listarVacinas());
+		ModelAndView mv = new ModelAndView("lotevacina/relatorio.html");
+		mv.addObject("lista", listaRelatorio);
 		
 		return mv;
 	}
 	
-	
-	
+	@RequestMapping(path="/edit")
+	public ModelAndView editarLoteVacina(@RequestParam Long id) {
+		
+		ModelAndView mv = new ModelAndView("lotevacina/form.html");		
+		LoteVacina loteVacina;
+		
+		try {
+			loteVacina = loteVacinaService.encontrarloteVacina(id);			
+		} catch (Exception e) {
+			loteVacina = new LoteVacina();
+			mv.addObject("mensagem", e.getMessage());
+		}
+		
+		mv.addObject("lotevacina", loteVacina);
+		mv.addObject("lista", vacinaService.listarVacinas());
+		
+		return mv;
+	}	
 	
 	@RequestMapping(method= RequestMethod.GET, path="/delete")
 	public ModelAndView deletarLoteVacina(@RequestParam Long id, RedirectAttributes redirectAttributes) {

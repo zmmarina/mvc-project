@@ -30,7 +30,7 @@ layout:decorate="~{layout.html}"
 				<td th:text="${pessoa.id}"></td>
 				<td th:text="${pessoa.nome}" width="20%"></td>			
 				<td th:text="${pessoa.cpf}"></td>
-				<td th:text="${#dates.format(pessoa.nascimento, 'dd/MM/yyyy')}"></td>
+				<td th:text="${#temporals.format(pessoa.nascimento, 'dd/MM/yyyy')}"></td>
 				<td th:text="${pessoa.endereco.logradouro} + ', ' + ${pessoa.endereco.numero} + ' - ' + ${pessoa.endereco.municipio} + ' / ' + ${pessoa.endereco.uf}"></td>
 				
 								

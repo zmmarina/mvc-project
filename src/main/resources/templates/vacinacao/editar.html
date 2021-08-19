@@ -15,13 +15,6 @@
 <div layout:fragment="content">
 	<div class="alert alert-primary" th:if="${mensagem != null}"
 		th:text="${mensagem}"></div>
-<label>Encontre paciente por CPF</label>
-	<form th:action="@{/vacinacao/novo}" method="get" class="d-flex ml-4">
-		<input id="_cpf" class="form-control me-2" type="text"
-			name="cpf" placeholder="Informe CPF"
-			aria-label="Search" required>
-		<button class="btn btn-primary btn-sm mr-1" type="submit">Buscar Paciente</button>
-	</form>
 
 	<form method="POST" th:object="${vacinacao}"
 		th:action="@{/vacinacao/novo}">
@@ -37,7 +30,7 @@
 		<div class="form-group mb-3">
 			<label for="pessoa">Paciente:</label> <select class="form-select"
 				th:field="*{pessoa}">
-				<option th:each="pessoa: ${pessoacpf}" th:value="${pessoa.id}"
+				<option th:each="pessoa: ${listapessoaid}" th:value="${pessoa.id}"
 					th:text="${pessoa.nome}" />
 			</select>
 		</div>
@@ -85,13 +78,9 @@
 		});
 	});
 	
-	
-		$(document).ready(function(){		
-			$('#_cpf').mask('000.000.000-00');		
-		});
+
 
 	</script>
-	
-</script>
+
 </div>
 </html>

@@ -46,5 +46,10 @@ public class VacinacaoService {
 		return vacinacaoRepository.encontrarVacinacaoPacienteId(cpf);
 	}
 	
+	public List<Vacinacao> listarPacientesDose(String dose){
+	
+		return vacinacaoRepository.encontrarPacienteDose(dose);
+	}
+	
 
 }

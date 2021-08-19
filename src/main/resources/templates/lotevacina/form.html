@@ -50,22 +50,17 @@ layout:decorate="~{layout.html}"
 		<div class="form-group mb-3">
 			<label for="dataRecebimento">Data de Recebimento:</label>	
 			<input
-				class="form-control col-md-4" type="text" id="_dataRecebimento">
-			</input>	
-			<input 
-				type="hidden" th:field="*{dataRecebimento}">				
-			</input>
+				class="form-control col-md-4" type="text" id="_dataRecebimento" th:field="*{dataRecebimento}">
+			</input>				
 		<div class="text-danger" th:if="${#fields.hasErrors('dataRecebimento')}" th:errors="*{dataRecebimento}"></div>						
 		</div>
 		<div class="form-group mb-3">
+		
 			<label for="dataValidade">Data de Validade:</label>	
 			<input
-				class="form-control col-md-4" type="text" id="_dataValidade">
+				class="form-control col-md-4" type="text" id="_dataValidade" th:field="*{dataValidade}">
 			</input>	
-			<input 
-				type="hidden" th:field="*{dataValidade}">				
-			</input>
-         <div class="text-danger" th:if="${#fields.hasErrors('dataValidade')}" th:errors="*{dataValidade}"></div>							 
+			<div class="text-danger" th:if="${#fields.hasErrors('dataValidade')}" th:errors="*{dataValidade}"></div>							 
 		</div>
 				
 						

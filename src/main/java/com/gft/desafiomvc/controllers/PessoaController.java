@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.gft.desafiomvc.entities.Pessoa;
 import com.gft.desafiomvc.services.PessoaService;
+import com.gft.desafiomvc.services.VacinacaoService;
 
 @Controller
 @RequestMapping("/paciente")
@@ -20,6 +21,10 @@ public class PessoaController {
 	
 	@Autowired
 	private PessoaService pessoaService;
+	
+	@Autowired
+	private VacinacaoService vacinacaoService;
+	
 	
 	@RequestMapping(method= RequestMethod.GET, path= "/novo")
 	public ModelAndView criarPessoa() {
@@ -31,9 +36,9 @@ public class PessoaController {
 	}
 	
 	@RequestMapping(method= RequestMethod.POST, path= "/novo")
-	public ModelAndView salvarPessoa(@Valid Pessoa pessoa, BindingResult bindingResult) {
+	public ModelAndView salvarPessoa(@Valid Pessoa pessoa, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
-		ModelAndView mv = new ModelAndView("pessoa/form.html");
+		ModelAndView mv = new ModelAndView("redirect:/paciente");
 		
 		boolean novaPessoa = true;
 		
@@ -46,16 +51,19 @@ public class PessoaController {
 			return mv;
 		}		
 		
-		Pessoa pessoaSalva = pessoaService.salvarPessoa(pessoa);
-		
-		if(novaPessoa) {
-			mv.addObject("pessoa", new Pessoa());
-		} else {
+		try {
+			Pessoa pessoaSalva = pessoaService.salvarPessoa(pessoa);
 			mv.addObject("pessoa", pessoaSalva);
+			redirectAttributes.addFlashAttribute("mensagem", "Sucesso: dados salvos!");
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("mensagem", "CPF já cadastrado!");
+			e.printStackTrace();
 		}
 		
-		mv.addObject("mensagem", "Successo: paciente salvo!");
-		
+		if(novaPessoa) {
+			mv.addObject("pessoa", novaPessoa);
+		}		
+						
 		return mv;		
 	}
 	
@@ -69,7 +77,16 @@ public class PessoaController {
 		return mv;
 	}
 	
-	@RequestMapping("/edit")
+	@RequestMapping(method= RequestMethod.GET, path="/relatorio")
+	public ModelAndView relatorioPessoas(String dose) {
+		
+		ModelAndView mv = new ModelAndView("pessoa/relatorio.html");
+		mv.addObject("listavacinacao", vacinacaoService.listarPacientesDose(dose));
+				
+		return mv;
+	}
+	
+	@RequestMapping(path="/edit")
 	public ModelAndView editarPessoa(@RequestParam Long id) {
 		
 		ModelAndView mv = new ModelAndView("pessoa/form.html");
@@ -77,13 +94,12 @@ public class PessoaController {
 		
 		try {
 			pessoa = pessoaService.encontrarPessoa(id);
+			mv.addObject("pessoa", pessoa);	
 		}catch(Exception e) {
 			pessoa = new Pessoa();
 			mv.addObject("mensagem", e.getMessage());
 		}
-		
-		mv.addObject("pessoa", pessoa);	
-				
+						
 		return mv;
 	}
 	

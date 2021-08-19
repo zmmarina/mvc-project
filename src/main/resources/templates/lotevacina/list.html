@@ -11,8 +11,7 @@ layout:decorate="~{layout.html}"
 </head>
 <div layout:fragment="content">
 <body>
-<div class="alert alert-primary" th:if="${mensagem != null}"
-			th:text="${mensagem}"></div>
+<div class="alert alert-primary" th:if="${mensagem != null}" th:text="${mensagem}"></div>
 <div th:if="${lista != null}">
 	<table class="table table-striped">
 		<thead>
@@ -34,9 +33,9 @@ layout:decorate="~{layout.html}"
 				<td th:text="${lotevacina.identificacaoLote}"></td>
 				<td th:text="${lotevacina.quantidadeRecebida}"></td>
 				<td th:text="${lotevacina.quantidadeRestante}"></td>
-				<td th:text="${#dates.format(lotevacina.dataRecebimento, 'dd/MM/yyyy')}"></td>
-				<td th:text="${#dates.format(lotevacina.dataValidade, 'dd/MM/yyyy')}"></td>
-				
+				<td th:text="${#temporals.format(lotevacina.dataRecebimento, 'dd/MM/yyyy')}"></td>
+				<td th:text="${#temporals.format(lotevacina.dataValidade, 'dd/MM/yyyy')}"></td>
+					
 								
 				<td width="15%"><a class="btn btn-primary btn-sm" th:href="@{/lotevacina/edit(id=${lotevacina.id})}">Editar</a>
 				<a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-warning" th:attr="data-target='#modal-warning'+${lotevacina.id }"><span class="glyphicon glyphicon-trash"></span>Excluir</a>

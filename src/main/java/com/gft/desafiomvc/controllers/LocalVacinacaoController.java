@@ -31,9 +31,9 @@ public class LocalVacinacaoController {
 	}
 	
 	@RequestMapping(method= RequestMethod.POST, path= "/novo")
-	public ModelAndView salvarLocalVacinacao(@Valid LocalVacinacao localVacinacao, BindingResult bindingResult) {
+	public ModelAndView salvarLocalVacinacao(@Valid LocalVacinacao localVacinacao, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
-		ModelAndView mv = new ModelAndView("localvacinacao/form.html");
+		ModelAndView mv = new ModelAndView("redirect:/localvacinacao");
 		
 		boolean novoLocalVacinacao = true;
 		
@@ -54,8 +54,8 @@ public class LocalVacinacaoController {
 			mv.addObject("localvacinacao", localVacinacaoSalvo);
 		}
 		
-		mv.addObject("mensagem", "Successo: local de vacinação salvo!");
-		
+		redirectAttributes.addFlashAttribute("mensagem", "Successo: local de vacinação salvo!");
+				
 		return mv;		
 	}
 	

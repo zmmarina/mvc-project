@@ -1,6 +1,6 @@
 package com.gft.desafiomvc.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -32,9 +32,9 @@ public class Pessoa {
 	private String nome;
 	
 	@NotNull(message= "A data de nascimento deve ser informada.")
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Past(message = "A data deve estar no passado.")
-	private Date nascimento;
+	private LocalDate nascimento;
 	
 	@Embedded
 	private Endereco endereco;
@@ -58,10 +58,10 @@ public class Pessoa {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Date getNascimento() {
+	public LocalDate getNascimento() {
 		return nascimento;
 	}
-	public void setNascimento(Date nascimento) {
+	public void setNascimento(LocalDate nascimento) {
 		this.nascimento = nascimento;
 	}
 	public Endereco getEndereco() {
