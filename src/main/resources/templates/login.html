@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+		<title>SISTEMA DE VACINAÇÃO - LOGIN</title>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">	
+</head>
+
+
+<form action="#" th:action="@{/login}" th:object="${usuario}" method="post">
+
+    <div class="form-group">
+        <input type="text" th:field="*{nome}" class="form-control"
+               id="nome" placeholder="Usuário"> <span
+               th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"
+               class="text-danger"></span>
+     </div>
+    <div class="form-group">
+         <input type="text" th:field="*{password}" class="form-control"
+                id="password" placeholder="Senha">
+         <ul class="text-danger" th:each="error: ${#fields.errors('password')}">
+             <li th:each="mensagem : ${error.split(',')}">
+                 <p class="error-message" th:text="${mensagem}"></p>
+             </li>
+         </ul>
+     </div>
+
+     <div class="col-md-6 mt-5">
+         <input type="submit" class="btn btn-primary" value="Submit">
+     </div>
+</form>
+
+</html>
