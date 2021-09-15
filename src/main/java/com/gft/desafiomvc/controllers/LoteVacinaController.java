@@ -51,6 +51,7 @@ public class LoteVacinaController {
 		}
 		
 		if(bindingResult.hasErrors()) {
+			mv.setViewName("lotevacina/form.html");
 			mv.addObject("lotevacina", loteVacina);
 			return mv;
 		}		

@@ -50,6 +50,7 @@ public class LoteVacina {
 	private LocalDate dataValidade;
 	
 	
+	
 	public Long getId() {
 		return id;
 	}

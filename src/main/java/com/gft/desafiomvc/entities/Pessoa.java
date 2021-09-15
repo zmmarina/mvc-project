@@ -23,7 +23,7 @@ public class Pessoa {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
 		
-	@CPF(message= "CPF inválido.")
+	@CPF(message="CPF inválido")
 	@Column(unique= true, nullable = false)
 	private String cpf;
 	

@@ -43,6 +43,7 @@ public class VacinaController {
 		}
 		
 		if(bindingResult.hasErrors()) {
+			mv.setViewName("vacina/form.html");
 			mv.addObject("vacina", vacina);
 			return mv;
 		}

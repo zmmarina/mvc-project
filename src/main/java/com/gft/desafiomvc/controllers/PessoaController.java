@@ -46,10 +46,11 @@ public class PessoaController {
 			novaPessoa = false;
 		}
 		
-		if(bindingResult.hasErrors()) {
-			mv.addObject("pessoa", pessoa);
-			return mv;
-		}		
+		  if(bindingResult.hasErrors()) {
+	            mv.setViewName("pessoa/form.html");
+	            mv.addObject("pessoa", pessoa);
+	            return mv;
+	        }       	
 		
 		try {
 			Pessoa pessoaSalva = pessoaService.salvarPessoa(pessoa);
@@ -60,7 +61,7 @@ public class PessoaController {
 			e.printStackTrace();
 		}
 		
-		if(novaPessoa) {
+		if(novaPessoa) {			
 			mv.addObject("pessoa", novaPessoa);
 		}		
 						

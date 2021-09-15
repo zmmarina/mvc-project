@@ -42,6 +42,7 @@ public class LocalVacinacaoController {
 		}
 		
 		if(bindingResult.hasErrors()) {
+			mv.setViewName("localvacinacao/form.html");
 			mv.addObject("localvacinacao", localVacinacao);
 			return mv;
 		}		
