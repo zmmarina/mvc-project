@@ -43,7 +43,7 @@ layout:decorate="~{layout.html}"
 			<input
 				class="form-control" id="restante" name="restante" type="number" th:field="*{quantidadeRestante}" required>
 			</input>
-			<div class="alert alert-danger mt-3" role="alert" id="erro_quantidade" style="display: none;"><strong>Atenção!</strong> A quantidade restante de vacinas deve ser igual ou menor do que a recebida.</div>
+			<div class="alert alert-danger mt-3" role="alert" id="erro_quantidade" style="display: none;"><strong>Atenção!</strong> A quantidade restante de vacinas deve ser igual à recebida.</div>
 			<div class="text-danger" th:if="${#fields.hasErrors('quantidadeRestante')}" th:errors="*{quantidadeRestante}"></div>		 
 		</div>
 		
@@ -96,7 +96,7 @@ layout:decorate="~{layout.html}"
 	
 
 	$('#restante').focusout(function() {
-	       if ($('#restante').val() > ($('#recebida').val())) {
+	       if ($('#restante').val() != ($('#recebida').val())) {
 	    	   $('#restante').val('');
 	    	   $("#erro_quantidade").show();
 	       } else {
