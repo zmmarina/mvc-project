@@ -9,16 +9,13 @@ import com.gft.desafiomvc.entities.LoteVacina;
 public class RelatorioVacinaDTO {
 	
 	private Long id;
-	
 	private String vacina;
-	
 	private String identificacaoLote;
-	
 	private Integer quantidadeRestante;
-	
 	private LocalDate dataValidade;
-	
 	private Long diasVencimento;
+	
+	public RelatorioVacinaDTO() {}
 	
 	public RelatorioVacinaDTO(LoteVacina loteVacina) {
 		this.id = loteVacina.getId();

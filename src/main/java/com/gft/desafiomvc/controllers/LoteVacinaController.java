@@ -105,7 +105,7 @@ public class LoteVacinaController {
 	@RequestMapping(path="/edit")
 	public ModelAndView editarLoteVacina(@RequestParam Long id) {
 		
-		ModelAndView mv = new ModelAndView("lotevacina/form.html");		
+		ModelAndView mv = new ModelAndView("lotevacina/editar.html");		
 		LoteVacina loteVacina;
 		
 		try {
