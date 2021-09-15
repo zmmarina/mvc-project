@@ -108,7 +108,8 @@ public class VacinacaoController {
 			if(!vacinacaoService.listarVacinacaoPessoaId(cpf).isEmpty()) {
 				mv.addObject("listapessoacpf", vacinacaoService.listarVacinacaoPessoaId(cpf));
 			}else {
-				mv.addObject("mensagem", "CPF sem agendamentos. Por favor, clique em Agendar Vacinação.");
+				ModelAndView mv2 = new ModelAndView("redirect:/vacinacao/novo");
+				return mv2;
 			}
 		} else {			
 			mv.addObject("lista", vacinacaoService.listarVacinacao());
