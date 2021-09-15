@@ -108,7 +108,7 @@ public class VacinacaoController {
 			if(!vacinacaoService.listarVacinacaoPessoaId(cpf).isEmpty()) {
 				mv.addObject("listapessoacpf", vacinacaoService.listarVacinacaoPessoaId(cpf));
 			}else {
-				ModelAndView mv2 = new ModelAndView("redirect:/vacinacao/novo");
+				ModelAndView mv2 = new ModelAndView("redirect:/vacinacao/novo?cpf=" + cpf);
 				return mv2;
 			}
 		} else {			
