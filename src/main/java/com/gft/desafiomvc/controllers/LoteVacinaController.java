@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.gft.desafiomvc.controllers.dto.RelatorioVacinaDTO;
 import com.gft.desafiomvc.entities.LoteVacina;
 import com.gft.desafiomvc.services.LoteVacinaService;
 import com.gft.desafiomvc.services.VacinaService;

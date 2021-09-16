@@ -1,4 +1,4 @@
-package com.gft.desafiomvc.controllers.dto;
+package com.gft.desafiomvc.controllers;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 

@@ -36,7 +36,8 @@ layout:decorate="~{layout.html}"
 				<div class="form-group mb-3">
 			<label for="loteVacina">Lote de Vacina:</label>
 			<select class="form-select" th:field="*{loteVacina}">
-				<option th:value="${vacinacao.id}" th:text="${vacinacao.loteVacina.vacina.nome}"/>	
+			<option th:each="loteVacina: ${listalote}" th:value="${loteVacina.id}" th:text="${loteVacina.identificacaoLote}"/>
+					
 			</select>				
 		</div>
 		
@@ -73,6 +74,10 @@ $(function(){
 			altField:"#data"
 		});
 	});
+	
+$(function(){
+	
+});
 	
 </script>
 </div>

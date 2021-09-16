@@ -159,7 +159,7 @@ public class VacinacaoController {
 		}
 
 		mv.addObject("lista", vacinacaoService.listarVacinacao());
-		mv.addObject("listalote", loteVacinaService.listarLoteVacina());
+		mv.addObject("listalote", vacinacaoService.listarLotesMesmaVacina(id));
 		mv.addObject("listalocal", localVacinacaoService.listarLocalVacinacao());
 		mv.addObject("listapessoa", pessoaService.listarPessoas());
 		mv.addObject("listavacina", vacinaService.listarVacinas());
