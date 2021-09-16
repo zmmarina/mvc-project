@@ -28,81 +28,133 @@
 
 	<div layout:fragment="content">
 
-
-		<div class="alert alert-primary" th:if="${mensagem != null}"
-			th:text="${mensagem}"></div>
-			<label>Verifique se existem agendamentos no CPF </label>
+		<div class="alert alert-primary" th:if="${mensagem != null}" th:text="${mensagem}"></div>
+		
+		<label>Verifique se existem agendamentos no CPF </label>		
 		<form th:action="@{/vacinacao}" method="get" class="d-flex ml-4">
-
 			<input id="_cpf" class="form-control me-2" name="cpf"
 				placeholder="Informe CPF" aria-label="Search" required>
-
-			<button class="btn btn-primary mr-1" type="submit">Pesquisar
-				CPF</button>
-			
+			<button class="btn btn-primary mr-1" type="submit">Pesquisar CPF</button>
 		</form>
-		<div th:if="${listapessoacpf != null}">
-
 		
-		<table id="tabela" class="table table-striped">
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Data</th>
-					<th>Paciente</th>
-					<th>Lote da Vacina</th>
-					<th>Local da Vacinação</th>
-					<th>Dose</th>
-					<th>Opções</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="vacinacao: ${listapessoacpf}">
-					<td th:text="${vacinacao.id}"></td>
-					<td th:text="${#temporals.format(vacinacao.data, 'dd/MM/yyyy')}"></td>					
-					<td th:text="${vacinacao.pessoa.nome}" width="20%"></td>
-					<td th:text="${vacinacao.loteVacina.vacina.nome}"></td>
-					<td th:text="${vacinacao.localVacinacao.nome}"></td>
-					<td id="_dose" th:text="${vacinacao.dose}"></td>
+		<div th:if="${listapessoacpf != null}">
+			<table id="tabela" class="table table-striped">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Data</th>
+						<th>Paciente</th>
+						<th>Lote da Vacina</th>
+						<th>Local da Vacinação</th>
+						<th>Dose</th>
+						<th>Opções</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="vacinacao: ${listapessoacpf}">
+						<td th:text="${vacinacao.id}"></td>
+						<td th:text="${#temporals.format(vacinacao.data, 'dd/MM/yyyy')}"></td>
+						<td th:text="${vacinacao.pessoa.nome}" width="20%"></td>
+						<td th:text="${vacinacao.loteVacina.vacina.nome}"></td>
+						<td th:text="${vacinacao.localVacinacao.nome}"></td>
+						<td id="_dose" th:text="${vacinacao.dose}"></td>
 
-					<td><a class="btn btn-primary btn-sm"
-						th:href="@{/vacinacao/edit(id=${vacinacao.id})}">Editar</a> <a
-						class="btn btn-danger btn-sm" data-toggle="modal"
-						data-target="#modal-warning"
-						th:attr="data-target='#modal-warning'+${vacinacao.id }"><span
+						<td><a class="btn btn-primary btn-sm"
+							th:href="@{/vacinacao/edit(id=${vacinacao.id})}">Editar</a> <a
+							class="btn btn-danger btn-sm" data-toggle="modal"
+							data-target="#modal-warning"
+							th:attr="data-target='#modal-warning'+${vacinacao.id }"><span
 							class="glyphicon glyphicon-trash"></span>Excluir</a> <a
-						id="botaodose"
-						th:classappend="${vacinacao.dose} != 'primeira' ? hideclass : showclass"
-						class="btn btn-info"
-						th:href="@{/vacinacao/segunda(id=${vacinacao.id})}">Agendar
-							2a. Dose</a>
+							id="botaodose"
+							th:classappend="${vacinacao.dose} != 'primeira' ? hideclass : showclass"
+							class="btn btn-info"
+							th:href="@{/vacinacao/segunda(id=${vacinacao.id})}">Agendar	2a. Dose</a>
 
-						<div class="modal modal-warning fade in"
-							th:id="modal-warning+${vacinacao.id}">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h6 class="modal-title">Deletar Vacinação?</h6>
-									</div>
-									<div class="modal-body">
-										<p>Tem certeza que deseja deletar esta vacinação?</p>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-primary pull-left"
-											data-dismiss="modal">Não</button>
-										<a type="button" class="btn btn-danger"
-											th:href="@{/vacinacao/delete(id=${vacinacao.id})}"><i
-											class="fa fa-check"></i>&nbsp;Sim</a>
+							<div class="modal modal-warning fade in" th:id="modal-warning+${vacinacao.id}">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h6 class="modal-title">Deletar Vacinação?</h6>
+										</div>
+										<div class="modal-body">
+											<p>Tem certeza que deseja deletar esta vacinação?</p>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-primary pull-left"
+												data-dismiss="modal">Não</button>
+											<a type="button" class="btn btn-danger"
+												th:href="@{/vacinacao/delete(id=${vacinacao.id})}"><i
+												class="fa fa-check"></i>&nbsp;Sim</a>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div></td>
-				</tr>
-			</tbody>
-		</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<div th:if="${listapessoacpf == null}">
+			<table id="tabela" class="table table-striped">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Data</th>
+						<th>Paciente</th>
+						<th>Lote da Vacina</th>
+						<th>Local da Vacinação</th>
+						<th>Dose</th>
+						<th>Opções</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="vacinacao: ${lista}">
+						<td th:text="${vacinacao.id}"></td>
+						<td th:text="${#temporals.format(vacinacao.data, 'dd/MM/yyyy')}"></td>
+						<td th:text="${vacinacao.pessoa.nome}" width="20%"></td>
+						<td th:text="${vacinacao.loteVacina.vacina.nome}"></td>
+						<td th:text="${vacinacao.localVacinacao.nome}"></td>
+						<td id="_dose" th:text="${vacinacao.dose}"></td>
+
+						<td><a class="btn btn-primary btn-sm"
+							th:href="@{/vacinacao/edit(id=${vacinacao.id})}">Editar</a> 
+							
+							<a class="btn btn-danger btn-sm" data-toggle="modal"
+							data-target="#modal-warning"
+							th:attr="data-target='#modal-warning'+${vacinacao.id }">
+							<span class="glyphicon glyphicon-trash"></span>Excluir</a> 
+							
+							<a id="botaodose" th:classappend="${vacinacao.dose} != 'primeira' ? hideclass : showclass"
+							class="btn btn-info" th:href="@{/vacinacao/segunda(id=${vacinacao.id})}">Agendar 2a. Dose</a>
+
+							<div class="modal modal-warning fade in" th:id="modal-warning+${vacinacao.id}">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h6 class="modal-title">Deletar Vacinação?</h6>
+										</div>
+										<div class="modal-body">
+											<p>Tem certeza que deseja deletar esta vacinação?</p>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-primary pull-left"
+												data-dismiss="modal">Não</button>
+											<a type="button" class="btn btn-danger"
+												th:href="@{/vacinacao/delete(id=${vacinacao.id})}"><i
+												class="fa fa-check"></i>&nbsp;Sim</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </body>
-</div>
+
 <div layout:fragment="scripts">
 	<script>
 		$(document).ready(function() {
